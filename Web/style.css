@@ -326,6 +326,73 @@ main.obsah p {
   opacity: 1;
 }
 
+/* Můj blog – domovská stránka s uměleckým pozadím */
+.stranka-blog {
+  background: transparent;
+}
+
+.blog-hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 140px);
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(180, 140, 100, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(160, 120, 90, 0.2) 0%, transparent 45%),
+    radial-gradient(ellipse 50% 50% at 50% 80%, rgba(140, 110, 85, 0.15) 0%, transparent 50%),
+    linear-gradient(165deg, #f5f0e8 0%, #ebe4d9 40%, #e2d9cc 100%);
+  z-index: -1;
+}
+
+.blog-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blog-hero-obsah {
+  max-width: 580px;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-nadpis {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 300;
+  color: #3d352b;
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.blog-uvod {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #4a4238;
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+}
+
+.blog-podpis {
+  margin-top: 2.5rem;
+  font-size: 0.95rem;
+  color: #6b6156;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
 /* Patka – spodní menu */
 .patka {
   margin-top: auto;
