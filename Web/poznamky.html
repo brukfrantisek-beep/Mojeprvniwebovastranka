@@ -22,18 +22,19 @@
     </nav>
   </header>
 
-  <main class="obsah">
-    <h1>Hello World</h1>
+  <main class="obsah poznamky-layout">
+    <h1>Poznámky</h1>
 
-    <form class="poznamka-formular" id="poznamka-formular">
-      <label for="poznamka-text" class="visually-hidden">Nová poznámka</label>
-      <textarea id="poznamka-text" name="text" rows="3" placeholder="Napište poznámku…" required></textarea>
-      <button type="submit">Submit</button>
-    </form>
+    <aside class="poznamky-panel-vlevo">
+      <form class="poznamka-formular" id="poznamka-formular">
+        <label for="poznamka-text" class="visually-hidden">Nová poznámka</label>
+        <textarea id="poznamka-text" name="text" rows="4" placeholder="Nová poznámka…" required></textarea>
+        <button type="submit">Uložit</button>
+      </form>
+    </aside>
 
-    <section class="poznamky-seznam" aria-label="Uložené poznámky">
-      <h2 class="poznamky-nadpis">Uložené poznámky</h2>
-      <ul id="poznamky-list"></ul>
+    <section class="poznamky-mrizka" aria-label="Uložené poznámky">
+      <div id="poznamky-list" class="poznamky-grid"></div>
     </section>
   </main>
 
@@ -69,25 +70,35 @@
         var poznamky = loadPoznamky();
         listEl.innerHTML = '';
         poznamky.forEach(function(text, index) {
-          var li = document.createElement('li');
-          li.className = 'poznamka-polozka';
-          var span = document.createElement('span');
-          span.className = 'poznamka-text';
-          span.textContent = text;
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'poznamka-smazat';
-          btn.setAttribute('aria-label', 'Smazat poznámku');
-          btn.textContent = '×';
-          btn.addEventListener('click', function() {
+          var card = document.createElement('div');
+          card.className = 'poznamka-karta';
+          card.setAttribute('data-index', index);
+          var preview = document.createElement('span');
+          preview.className = 'poznamka-preview';
+          preview.textContent = text.length > 50 ? text.slice(0, 50) + '…' : text;
+          var full = document.createElement('span');
+          full.className = 'poznamka-obsah';
+          full.textContent = text;
+          var delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'poznamka-smazat';
+          delBtn.setAttribute('aria-label', 'Smazat');
+          delBtn.textContent = '×';
+          delBtn.addEventListener('click', function(ev) {
+            ev.stopPropagation();
             var arr = loadPoznamky();
             arr.splice(index, 1);
             savePoznamky(arr);
             renderPoznamky();
           });
-          li.appendChild(span);
-          li.appendChild(btn);
-          listEl.appendChild(li);
+          card.appendChild(preview);
+          card.appendChild(full);
+          card.appendChild(delBtn);
+          card.addEventListener('click', function(ev) {
+            if (ev.target === delBtn) return;
+            card.classList.toggle('otevrena');
+          });
+          listEl.appendChild(card);
         });
       }
 
