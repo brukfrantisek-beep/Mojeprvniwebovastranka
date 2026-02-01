@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vyhledávání</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="menu">
+      <ul class="menu-list">
+        <li><a href="tvurce.html">Tvůrce</a></li>
+        <li><a href="zpravy.html">Zprávy</a></li>
+        <li><a href="poznamky.html">Poznámky</a></li>
+        <li><a href="programy.html">Programy</a></li>
+      </ul>
+      <form class="vyhledavani" action="search.html" method="get">
+        <input type="search" name="q" placeholder="Hledat na webu..." aria-label="Hledat na webu">
+        <button type="submit">Hledat</button>
+      </form>
+    </nav>
+  </header>
+
+  <main class="obsah">
+    <h1>Vyhledávání</h1>
+    <p id="vysledky-text">Zadejte hledaný výraz do pole výše a stiskněte Hledat.</p>
+  </main>
+
+  <footer class="patka">
+    <nav class="patka-menu">
+      <span>Kontakt</span>
+      <span>email</span>
+      <span>podmínky</span>
+    </nav>
+  </footer>
+
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var q = params.get('q');
+      var el = document.getElementById('vysledky-text');
+      if (q && q.trim()) {
+        el.textContent = 'Výsledky hledání pro: „' + q.trim() + '“. (Vyhledávání po celém webu lze doplnit podle potřeby.)';
+      }
+    })();
+  </script>
+</body>
+</html>

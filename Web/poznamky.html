@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poznámky</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="menu">
+      <ul class="menu-list">
+        <li><a href="tvurce.html">Tvůrce</a></li>
+        <li><a href="zpravy.html">Zprávy</a></li>
+        <li><a href="poznamky.html">Poznámky</a></li>
+        <li><a href="programy.html">Programy</a></li>
+      </ul>
+      <form class="vyhledavani" action="search.html" method="get">
+        <input type="search" name="q" placeholder="Hledat na webu..." aria-label="Hledat na webu">
+        <button type="submit">Hledat</button>
+      </form>
+    </nav>
+  </header>
+
+  <main class="obsah">
+    <h1>Poznámky</h1>
+
+    <form class="poznamka-formular" id="poznamka-formular">
+      <label for="poznamka-text" class="visually-hidden">Nová poznámka</label>
+      <textarea id="poznamka-text" name="text" rows="3" placeholder="Napište poznámku…" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+
+    <section class="poznamky-seznam" aria-label="Uložené poznámky">
+      <h2 class="poznamky-nadpis">Uložené poznámky</h2>
+      <ul id="poznamky-list"></ul>
+    </section>
+  </main>
+
+  <footer class="patka">
+    <nav class="patka-menu">
+      <span>Kontakt</span>
+      <span>email</span>
+      <span>podmínky</span>
+    </nav>
+  </footer>
+
+  <script>
+    (function() {
+      var STORAGE_KEY = 'poznamky-web';
+      var form = document.getElementById('poznamka-formular');
+      var textarea = document.getElementById('poznamka-text');
+      var listEl = document.getElementById('poznamky-list');
+
+      function loadPoznamky() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function savePoznamky(poznamky) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(poznamky));
+      }
+
+      function renderPoznamky() {
+        var poznamky = loadPoznamky();
+        listEl.innerHTML = '';
+        poznamky.forEach(function(text, index) {
+          var li = document.createElement('li');
+          li.className = 'poznamka-polozka';
+          var span = document.createElement('span');
+          span.className = 'poznamka-text';
+          span.textContent = text;
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'poznamka-smazat';
+          btn.setAttribute('aria-label', 'Smazat poznámku');
+          btn.textContent = '×';
+          btn.addEventListener('click', function() {
+            var arr = loadPoznamky();
+            arr.splice(index, 1);
+            savePoznamky(arr);
+            renderPoznamky();
+          });
+          li.appendChild(span);
+          li.appendChild(btn);
+          listEl.appendChild(li);
+        });
+      }
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var text = (textarea.value || '').trim();
+        if (!text) return;
+        var poznamky = loadPoznamky();
+        poznamky.push(text);
+        savePoznamky(poznamky);
+        textarea.value = '';
+        renderPoznamky();
+      });
+
+      renderPoznamky();
+    })();
+  </script>
+</body>
+</html>
