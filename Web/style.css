@@ -248,16 +248,16 @@ main.obsah p {
   aspect-ratio: 1;
   min-height: 120px;
   padding: 12px;
-  background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
+  background: #b8b8b8;
+  border: 1px solid #a0a0a0;
+  border-radius: 16px;
   cursor: pointer;
   overflow: hidden;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .poznamka-karta:hover {
-  border-color: #ccc;
+  border-color: #909090;
 }
 
 .poznamka-karta.otevrena {
@@ -266,13 +266,13 @@ main.obsah p {
   min-height: auto;
   max-height: 400px;
   overflow-y: auto;
-  border-color: #999;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-color: #909090;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .poznamka-preview {
   font-size: 0.8rem;
-  color: #666;
+  color: #333;
   line-height: 1.4;
   white-space: pre-wrap;
   word-break: break-word;
@@ -308,12 +308,12 @@ main.obsah p {
   padding: 0;
   font-size: 1.1rem;
   line-height: 1;
-  color: #999;
+  color: #555;
   background: transparent;
   border: none;
   border-radius: 2px;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.8;
   transition: opacity 0.15s, color 0.15s;
 }
 
