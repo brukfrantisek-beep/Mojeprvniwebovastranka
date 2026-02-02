@@ -113,6 +113,16 @@ main.obsah {
   padding: 0 1.5rem;
 }
 
+/* Poznámky – celá šířka, obsah od levého okraje, jemné pozadí */
+main.obsah.poznamky-layout {
+  max-width: none;
+  width: 100%;
+  margin: 2rem 0;
+  padding: 1.5rem 1.5rem 2.5rem;
+  background: linear-gradient(180deg, #f5f7fa 0%, #fff 24%);
+  min-height: 50vh;
+}
+
 main.obsah h1 {
   color: #1a1a2e;
   margin-bottom: 1rem;
@@ -183,61 +193,84 @@ main.obsah p {
   background: #1a1a2e;
 }
 
-/* Poznámky – minimalistický layout */
+/* Poznámky – 3 sloupce: formulář vlevo, poznámky ve 2. a 3. sloupci */
 .poznamky-layout {
-  max-width: 100%;
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 2rem;
+  grid-template-columns: minmax(260px, 320px) 1fr 1fr;
+  gap: 1.5rem 2rem;
   align-items: start;
 }
 
-@media (max-width: 600px) {
+.poznamky-layout h1 {
+  grid-column: 1 / -1;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 900px) {
   .poznamky-layout {
     grid-template-columns: 1fr;
   }
 }
 
-.poznamky-panel-vlevo {
+/* 1. sloupec – pole pro psaní (vlevo nahoře) */
+.poznamky-sloupec-1 {
   position: sticky;
   top: 5rem;
+  background: linear-gradient(180deg, #f0f4f8 0%, #e8eef4 100%);
+  padding: 1.25rem;
+  border-radius: 14px;
+  border: 1px solid #d0d8e0;
+  box-shadow: 0 2px 10px rgba(22, 33, 62, 0.06);
 }
 
-.poznamky-panel-vlevo .poznamka-formular {
+.poznamky-sloupec-1 .poznamka-formular {
   margin-bottom: 0;
 }
 
-.poznamky-panel-vlevo .poznamka-formular textarea {
-  min-height: 100px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  font-size: 0.9rem;
-  resize: none;
+.poznamky-sloupec-1 .poznamka-formular textarea {
+  min-height: 110px;
+  border-radius: 10px;
+  border: 1px solid #c5cdd5;
+  font-size: 0.95rem;
+  resize: vertical;
+  background: #fff;
+  padding: 0.85rem 1rem;
 }
 
-.poznamky-panel-vlevo .poznamka-formular button[type="submit"] {
+.poznamky-sloupec-1 .poznamka-formular textarea:focus {
+  border-color: #5a7a9e;
+  box-shadow: 0 0 0 2px rgba(90, 122, 158, 0.2);
+}
+
+.poznamky-sloupec-1 .poznamka-formular button[type="submit"] {
   width: 100%;
-  margin-top: 0.5rem;
-  padding: 0.6rem;
-  font-size: 0.85rem;
-  border-radius: 4px;
-  background: #222;
+  margin-top: 0.6rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2d4a6f 0%, #1a365d 100%);
   color: #fff;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.poznamky-panel-vlevo .poznamka-formular button[type="submit"]:hover {
-  background: #444;
+.poznamky-sloupec-1 .poznamka-formular button[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 54, 93, 0.35);
 }
 
-/* Mřížka poznámek – čtverce */
-.poznamky-mrizka {
-  min-height: 200px;
+/* 2. a 3. sloupec – seznamy poznámek (shora dolů) */
+.poznamky-sloupec-2,
+.poznamky-sloupec-3 {
+  min-height: 120px;
 }
 
-.poznamky-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+.poznamky-sloupec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -245,35 +278,35 @@ main.obsah p {
 
 .poznamka-karta {
   position: relative;
-  aspect-ratio: 1;
-  min-height: 120px;
-  padding: 12px;
-  background: #b8b8b8;
-  border: 1px solid #a0a0a0;
-  border-radius: 16px;
+  min-height: 100px;
+  padding: 1rem 1rem 2.25rem;
+  background: linear-gradient(145deg, #d4dce4 0%, #c2cad2 100%);
+  border: 1px solid #b0b8c0;
+  border-radius: 14px;
   cursor: pointer;
   overflow: hidden;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .poznamka-karta:hover {
-  border-color: #909090;
+  border-color: #9ca4ac;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .poznamka-karta.otevrena {
-  grid-column: 1 / -1;
-  aspect-ratio: auto;
   min-height: auto;
-  max-height: 400px;
+  max-height: 360px;
   overflow-y: auto;
-  border-color: #909090;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-color: #8a96a4;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .poznamka-preview {
-  font-size: 0.8rem;
-  color: #333;
-  line-height: 1.4;
+  font-size: 0.88rem;
+  color: #2c3238;
+  line-height: 1.45;
   white-space: pre-wrap;
   word-break: break-word;
   overflow: hidden;
@@ -289,8 +322,8 @@ main.obsah p {
 .poznamka-obsah {
   display: none;
   font-size: 0.9rem;
-  color: #333;
-  line-height: 1.5;
+  color: #2c3238;
+  line-height: 1.55;
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -301,29 +334,31 @@ main.obsah p {
 
 .poznamka-smazat {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 22px;
-  height: 22px;
+  bottom: 8px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
   padding: 0;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1;
-  color: #555;
-  background: transparent;
-  border: none;
-  border-radius: 2px;
+  color: #5a6068;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.15s, color 0.15s;
+  opacity: 0.85;
+  transition: opacity 0.15s, color 0.15s, background 0.15s;
 }
 
 .poznamka-karta:hover .poznamka-smazat {
   opacity: 1;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .poznamka-smazat:hover {
-  color: #c00;
+  color: #b91c1c;
   opacity: 1;
+  background: rgba(255, 255, 255, 0.95);
 }
 
 /* Můj blog – domovská stránka s uměleckým pozadím */
