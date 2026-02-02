@@ -51,7 +51,8 @@
       var STORAGE_KEY = 'poznamky-web';
       var form = document.getElementById('poznamka-formular');
       var textarea = document.getElementById('poznamka-text');
-      var listEl = document.getElementById('poznamky-list');
+      var listCol2 = document.getElementById('poznamky-list-2');
+      var listCol3 = document.getElementById('poznamky-list-3');
 
       function loadPoznamky() {
         try {
@@ -68,7 +69,8 @@
 
       function renderPoznamky() {
         var poznamky = loadPoznamky();
-        listEl.innerHTML = '';
+        listCol2.innerHTML = '';
+        listCol3.innerHTML = '';
         poznamky.forEach(function(text, index) {
           var card = document.createElement('div');
           card.className = 'poznamka-karta';
@@ -84,10 +86,11 @@
           delBtn.className = 'poznamka-smazat';
           delBtn.setAttribute('aria-label', 'Smazat');
           delBtn.textContent = '×';
+          var idx = index;
           delBtn.addEventListener('click', function(ev) {
             ev.stopPropagation();
             var arr = loadPoznamky();
-            arr.splice(index, 1);
+            arr.splice(idx, 1);
             savePoznamky(arr);
             renderPoznamky();
           });
@@ -98,7 +101,11 @@
             if (ev.target === delBtn) return;
             card.classList.toggle('otevrena');
           });
-          listEl.appendChild(card);
+          if (index % 2 === 0) {
+            listCol2.appendChild(card);
+          } else {
+            listCol3.appendChild(card);
+          }
         });
       }
 
